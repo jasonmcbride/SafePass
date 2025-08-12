@@ -1,0 +1,25 @@
+<section aria-labelledby="forgot-password-heading" class="w-full">
+  <h2 id="forgot-password-heading" class="text-2xl md:text-3xl font-bold text-gray-800 text-center mb-6 md:mb-8">Forgot your password?</h2>
+
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "space-y-4 md:space-y-6" }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <div class="space-y-1 md:space-y-2">
+      <%= f.label :email, class: "block text-sm md:text-base font-medium text-gray-700" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", 
+            class: "w-full px-3 py-2 md:px-4 md:py-3 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition",
+            required: true %>
+    </div>
+
+    <div class="pt-1 md:pt-2">
+      <%= f.submit "Send me reset password instructions", 
+            class: "w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 md:py-3 md:px-6 text-sm md:text-base rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition cursor-pointer" %>
+    </div>
+  <% end %>
+
+  <footer class="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-gray-200">
+    <nav aria-label="Authentication links" class="[&_a]:text-blue-600 [&_a]:hover:text-blue-800 [&_a]:hover:underline [&_a]:text-sm [&_a]:md:text-base">
+      <%= render "devise/shared/links" %>
+    </nav>
+  </footer>
+</section>

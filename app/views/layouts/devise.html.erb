@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title><%= content_for(:title) || "Safe Pass App" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+  </head>
+
+  <body class="bg-gray-50 min-h-screen">
+    <%= render partial: "shared/notifications" %>
+    <main class="flex flex-col items-center justify-center min-h-screen p-4 sm:p-6" role="main">
+      <h1 class="text-2xl font-bold text-gray-800"><%= flash[:notice] %></h1>
+      <!-- Logo and App Name as Link -->
+      <%= link_to root_path, class: "text-center mb-6 sm:mb-8 md:mb-10 no-underline hover:opacity-90 transition-opacity" do %>
+        <img src="/icon.png" alt="Safe Pass Logo" class="w-16 h-16 mx-auto mb-3">
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">Safe Pass</h1>
+      <% end %>
+      
+      <!-- Card Container -->
+      <article class="w-full max-w-md sm:max-w-lg md:max-w-xl p-6 sm:p-8 md:p-10 bg-white rounded-lg sm:rounded-xl shadow-sm border border-gray-200">
+        <div class="space-y-4 sm:space-y-6">
+          <%= yield %>
+        </div>
+      </article>
+    </main>
+  </body>
+</html>

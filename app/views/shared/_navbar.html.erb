@@ -1,4 +1,5 @@
 <header class="lg:px-16 px-4 bg-white flex flex-wrap items-center py-4 shadow-md">
+  
     <div class="flex-1 flex justify-between items-center">
        <%= link_to "Company", root_path , class: "text-xl" %>
     </div>
@@ -16,15 +17,22 @@
         <nav>
             <ul class="md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0">
                 <li><%= link_to "About Us", pages_about_path, class: "md:p-4 py-3 px-0 block" %></li>
-                <li><%= link_to "Sign In", new_user_session_path, class: "md:p-4 py-3 px-0 block" %></li>
-                <li><%= link_to "Sign Up", new_user_registration_path, class: "md:p-4 py-3 px-0 block" %></li>
-                <li>
-  <%= link_to "Sign Out", destroy_user_session_path, 
+                <li><%= link_to "New Entry", new_entry_path, class: "md:p-4 py-3 px-0 block" %></li>
+              <% if user_signed_in? %>
+              <li><%= link_to "Account", edit_user_registration_path, class: "md:p-4 py-3 px-0 block" %></li>
+  <li>
+    <%= link_to "Sign Out", destroy_user_session_path, 
               method: :delete, 
               data: { turbo_method: :delete, confirm: "Are you sure you want to sign out?" }, 
               class: "md:p-4 py-3 px-0 block" %>
-</li>
+  </li>
+<% else %>
+  <li><%= link_to "Sign In", new_user_session_path, class: "md:p-4 py-3 px-0 block" %></li>
+  <li><%= link_to "Sign Up", new_user_registration_path, class: "md:p-4 py-3 px-0 block" %></li>
+                
+<% end %>
             </ul>
         </nav>
     </div>
 </header>
+

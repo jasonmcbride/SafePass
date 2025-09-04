@@ -1,1 +1,3 @@
-<%= render "entries/entry_form", entry: @entry %>
+<%= turbo_frame_tag "main-dashboard"  do %>
+  <%= render "entries/entry_form", entry: @entry %>
+<% end %>

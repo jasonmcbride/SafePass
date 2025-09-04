@@ -18,10 +18,13 @@ class EntriesController < ApplicationController
   def create
     @entry = current_user.entries.build(entry_params)
     if @entry.save
-      flash[:notice] = "Entry has been saved."
-      redirect_to root_path
+      flash.now[:notice] = "<strong>#{@entry.name}</strong> has been saved.".html_safe
+      respond_to do |format|
+        format.html { redirect_to @entry }
+        format.turbo_stream {}
+      end
+    
     else
-      flash.now[:alert] = "There was an error saving the entry."
       render :new, status: :unprocessable_entity
     end
   end
@@ -53,6 +56,9 @@ class EntriesController < ApplicationController
 
   def set_main_entry
     @main_entry = current_user.entries.first
+    if @main_entry.nil?
+      @main_entry = current_user.entries.build
+    end
   end
 
   def entry_params

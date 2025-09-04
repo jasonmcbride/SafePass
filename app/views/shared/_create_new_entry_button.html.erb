@@ -1,0 +1,13 @@
+ <%= link_to new_entry_path, data: { turbo_frame: "main-dashboard" },
+          class: "flex items-center p-2 rounded-lg text-gray-900 hover:bg-gray-100
+                  dark:text-white dark:hover:bg-gray-700 group
+                  focus:outline-none focus:ring-2 focus:ring-blue-600/50" do %>
+  <!-- plus-in-circle icon -->
+  <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75
+                    dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+             viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+    <path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+  </svg>
+  <span class="flex-1 ms-3 whitespace-nowrap">Create New Entry</span>
+<% end %>

@@ -2,6 +2,7 @@ class EntriesController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_entries, only: [:index, :new, :show, :edit, :update, :destroy]
+  before_action :set_main_entry, only: [:index]
 
   def index
   end
@@ -48,6 +49,10 @@ class EntriesController < ApplicationController
 
   def set_entries
     @entries = current_user.entries
+  end
+
+  def set_main_entry
+    @main_entry = current_user.entries.first
   end
 
   def entry_params

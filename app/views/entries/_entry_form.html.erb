@@ -6,11 +6,11 @@
       </h2>
     <% else %>
       <h2 id="entry-heading" class="text-2xl md:text-3xl font-bold text-gray-800 text-center mb-6 md:mb-8">
-        <%= render partial: "entries/entry_image", locals: { entry: @entry } %>
-        <%= @entry.name %>
+        <%= render partial: "entries/entry_image", locals: { entry: entry } %>
+        <%= entry.name %>
       </h2>
     <% end %>
-    <% if @entry.errors.any? %>
+    <% if entry.errors.any? %>
       <div class="mb-6 rounded-lg border border-red-300 bg-red-50 p-4">
         <div class="flex items-center mb-2">
           <!-- Error icon -->
@@ -18,17 +18,17 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M12 5c-3.866 0-7 3.134-7 7 0 3.867 3.134 7 7 7s7-3.133 7-7c0-3.866-3.134-7-7-7z" />
           </svg>
           <h3 class="text-sm md:text-base font-semibold text-red-700">
-            Please fix the following <%= pluralize(@entry.errors.count, "error") %>:
+            Please fix the following <%= pluralize(entry.errors.count, "error") %>:
           </h3>
         </div>
         <ul class="list-disc list-inside space-y-1 text-sm md:text-base text-red-600">
-          <% @entry.errors.full_messages.each do |message| %>
+          <% entry.errors.full_messages.each do |message| %>
             <li><%= message %></li>
           <% end %>
         </ul>
       </div>
     <% end %>
-    <%= form_with model: @entry, html: { class: "space-y-5 md:space-y-6" } do |f| %>
+    <%= form_with model: entry, html: { class: "space-y-5 md:space-y-6" } do |f| %>
       <!-- Name -->
       <div class="relative">
         <%= f.text_field :name,

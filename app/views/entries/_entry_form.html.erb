@@ -1,0 +1,112 @@
+<section aria-labelledby="entry-heading" class="w-full">
+  <div class="mx-auto w-full max-w-xl bg-white p-6 md:p-8 rounded-xl shadow-md">
+    <% if entry.new_record? %>
+      <h2 id="entry-heading" class="text-2xl md:text-3xl font-bold text-gray-800 text-center mb-6 md:mb-8">
+        Create New Entry
+      </h2>
+    <% else %>
+      <h2 id="entry-heading" class="text-2xl md:text-3xl font-bold text-gray-800 text-center mb-6 md:mb-8">
+        <%= render partial: "entries/entry_image", locals: { entry: @entry } %>
+        <%= @entry.name %>
+      </h2>
+    <% end %>
+    <% if @entry.errors.any? %>
+      <div class="mb-6 rounded-lg border border-red-300 bg-red-50 p-4">
+        <div class="flex items-center mb-2">
+          <!-- Error icon -->
+          <svg class="h-5 w-5 text-red-500 mr-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M12 5c-3.866 0-7 3.134-7 7 0 3.867 3.134 7 7 7s7-3.133 7-7c0-3.866-3.134-7-7-7z" />
+          </svg>
+          <h3 class="text-sm md:text-base font-semibold text-red-700">
+            Please fix the following <%= pluralize(@entry.errors.count, "error") %>:
+          </h3>
+        </div>
+        <ul class="list-disc list-inside space-y-1 text-sm md:text-base text-red-600">
+          <% @entry.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <%= form_with model: @entry, html: { class: "space-y-5 md:space-y-6" } do |f| %>
+      <!-- Name -->
+      <div class="relative">
+        <%= f.text_field :name,
+              placeholder: " ",
+              autocomplete: "name",
+              required: true,
+              class: "peer block w-full rounded-lg border border-gray-300 bg-white
+                      px-3 pt-6 pb-2 md:px-4 md:pt-7 md:pb-2
+                      text-sm md:text-base text-gray-900
+                      focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition" %>
+        <%= f.label :name, "Name",
+              class: "absolute left-3 md:left-4 top-2 text-gray-500 text-sm md:text-base transition-all
+                      peer-placeholder-shown:top-6 md:peer-placeholder-shown:top-7
+                      peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-sm
+                      peer-focus:top-2 peer-focus:text-xs peer-focus:text-blue-600" %>
+      </div>
+      <!-- URL -->
+      <div class="relative">
+        <%= f.url_field :url,
+              placeholder: " ",
+              autocomplete: "url",
+              required: true,
+              class: "peer block w-full rounded-lg border border-gray-300 bg-white
+                      px-3 pt-6 pb-2 md:px-4 md:pt-7 md:pb-2
+                      text-sm md:text-base text-gray-900
+                      focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition" %>
+        <%= f.label :url, "URL",
+              class: "absolute left-3 md:left-4 top-2 text-gray-500 text-sm md:text-base transition-all
+                      peer-placeholder-shown:top-6 md:peer-placeholder-shown:top-7
+                      peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-sm
+                      peer-focus:top-2 peer-focus:text-xs peer-focus:text-blue-600" %>
+      </div>
+      <!-- Username -->
+      <div class="relative">
+        <%= f.text_field :username,
+              placeholder: " ",
+              autocomplete: "username",
+              required: true,
+              class: "peer block w-full rounded-lg border border-gray-300 bg-white
+                      px-3 pt-6 pb-2 md:px-4 md:pt-7 md:pb-2
+                      text-sm md:text-base text-gray-900
+                      focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition" %>
+        <%= f.label :username, "Username",
+              class: "absolute left-3 md:left-4 top-2 text-gray-500 text-sm md:text-base transition-all
+                      peer-placeholder-shown:top-6 md:peer-placeholder-shown:top-7
+                      peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-sm
+                      peer-focus:top-2 peer-focus:text-xs peer-focus:text-blue-600" %>
+      </div>
+      <!-- Password -->
+      <div class="relative">
+        <%= f.password_field :password,
+              placeholder: " ",
+              autocomplete: "new-password",
+              required: true,
+              class: "peer block w-full rounded-lg border border-gray-300 bg-white
+                      px-3 pt-6 pb-2 md:px-4 md:pt-7 md:pb-2
+                      text-sm md:text-base text-gray-900
+                      focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition" %>
+        <%= f.label :password, "Password",
+              class: "absolute left-3 md:left-4 top-2 text-gray-500 text-sm md:text-base transition-all
+                      peer-placeholder-shown:top-6 md:peer-placeholder-shown:top-7
+                      peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-sm
+                      peer-focus:top-2 peer-focus:text-xs peer-focus:text-blue-600" %>
+      </div>
+      <!-- Submit -->
+      <div class="pt-1 md:pt-2">
+        <% if entry.new_record? %>
+          <%= f.submit "Create New Entry",
+              class: "w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 md:py-3 md:px-6
+                      text-sm md:text-base rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500
+                      focus:ring-offset-2 transition cursor-pointer" %>
+        <% else %>
+          <%= f.submit "Update Entry",
+              class: "w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 md:py-3 md:px-6
+                      text-sm md:text-base rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500
+                      focus:ring-offset-2 transition cursor-pointer" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</section>

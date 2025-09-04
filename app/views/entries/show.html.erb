@@ -1,6 +1,7 @@
 <section aria-labelledby="entry-heading" class="w-full">
   <div class="mx-auto w-full max-w-xl bg-white p-6 md:p-8 rounded-xl shadow-md">
     <h2 id="entry-heading" class="text-2xl md:text-3xl font-bold text-gray-800 text-center mb-6 md:mb-8">
+      <%= render partial: "entries/entry_image", locals: { entry: @entry } %>
       <%= @entry.name %>
     </h2>
     <div class="mt-4 text-sm text-gray-500"><%= @entry.url %></div>

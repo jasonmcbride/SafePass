@@ -1,1 +1,8 @@
-<div class="mt-4 text-sm text-gray-500"><%= link_to entry.name, entry_path(entry),  class: "text-blue-500 hover:underline" %></div>
+<% if entry&.persisted? %>
+  <li>
+    <a href="<%= entry_path(entry) %>" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+      <%= render partial: "entries/entry_image", locals: { entry: entry } %>
+      <span class="ms-3"><%= entry.name %></span>
+    </a>
+  </li>
+<% end %>

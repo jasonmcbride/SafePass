@@ -1,0 +1,4 @@
+<% if entry.persisted? && entry&.url.present? %>
+  <%= image_tag "https://www.google.com/s2/favicons?domain=#{URI.parse(entry&.url).host}&sz=32",
+              class: "w-5 h-5 mr-2 rounded-sm inline-block"  %>
+<% end %>

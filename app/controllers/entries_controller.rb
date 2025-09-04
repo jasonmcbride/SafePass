@@ -1,9 +1,9 @@
 class EntriesController < ApplicationController
 
   before_action :authenticate_user!
+  before_action :set_entries, only: [:index, :new, :show, :edit, :update, :destroy]
 
   def index
-    @entries = current_user.entries
   end
 
   def show
@@ -45,6 +45,10 @@ class EntriesController < ApplicationController
   end
 
   private
+
+  def set_entries
+    @entries = current_user.entries
+  end
 
   def entry_params
     params.expect(entry: [:name, :url, :username, :password])

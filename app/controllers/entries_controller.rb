@@ -2,10 +2,22 @@ class EntriesController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
-  before_action :set_entries, only: [:index, :new, :show, :edit, :update, :destroy]
-  before_action :set_main_entry, only: [:index]
+ 
 
   def index
+    @entries = current_user.entries.search(params[:name])
+    @main_entry = @entries.first
+    if @main_entry.nil?
+      @main_entry = current_user.entries.build
+    end
+
+    return unless params[:name].present?
+    if @entries.length == 1
+      render turbo_stream: [
+        turbo_stream.update("main-dashboard", partial: "entries/entry_form", locals: { entry: @entries.first }),
+        turbo_stream.update("aside-nav-entries", partial: "shared/aside", locals: { entry: @entries.first })
+      ]
+    end
   end
 
   def show
@@ -59,7 +71,7 @@ class EntriesController < ApplicationController
   end
 
   def set_entries
-    @entries = current_user.entries
+    @entries = current_user.entries.search(params[:name])
   end
 
   def set_main_entry

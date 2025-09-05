@@ -11,6 +11,6 @@ class Entry < ApplicationRecord
   scope :search_name, ->(name) { where("name ILIKE ?", "%#{name}%") if name.present? }
   
   def self.search(name) 
-    search_name(name).order(name: :desc)
+    search_name(name).order(name: :asc)
   end
 end

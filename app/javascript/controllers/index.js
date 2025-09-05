@@ -9,3 +9,7 @@ application.register("hello", HelloController)
 
 import NotificationsController from "./notifications_controller"
 application.register("notifications", NotificationsController)
+
+
+import SearchController from "./search_controller"
+application.register("search", SearchController)

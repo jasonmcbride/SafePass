@@ -1,8 +1,15 @@
-<section aria-labelledby="search-section" class="w-full mb-10">
+<section aria-labelledby="search-section" class="w-full mb-10" data-controller="search" >
   <%= form_with url: entries_path, method: :get, data: { turbo_frame: "search-results" }, class: "flex items-center max-w-sm mx-auto" do |f| %>
     <label for="simple-search" class="sr-only">Search</label>
     <div class="relative w-full">
-      <%= f.text_field :name, placeholder: "Search", required: false,  class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-5 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+      <%= f.text_field :name, placeholder: "Search", required: false, data: { action: "input->search#toggleClearButton" },  class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-5 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+      <div class="absolute inset-y-0 end-0 flex items-center pe-3">
+        <%= link_to root_path do %>
+          <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+          </svg>
+        <% end %>
+      </div>
     </div>
     <%= f.button class:"p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" do %>
       <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">

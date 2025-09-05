@@ -1,0 +1,5 @@
+<%= render_flash_messages_stream %>
+<%= turbo_stream.replace @entry %>
+<%= turbo_stream.update "main-dashboard" do %>
+  <%= render "entries/entry_form", entry:  @entry %>
+<% end %>

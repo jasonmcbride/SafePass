@@ -23,7 +23,6 @@ class EntriesController < ApplicationController
         format.html { redirect_to root_path }
         format.turbo_stream {}
       end
-    
     else
       render :new, status: :unprocessable_entity
     end
@@ -34,9 +33,13 @@ class EntriesController < ApplicationController
 
   def update
     if @entry.update(entry_params)
-      redirect_to @entry, notice: "Entry updated successfully."
+      flash.now[:notice] = "<strong>#{@entry.name}</strong> has been updated.".html_safe
+      respond_to do |format|
+        format.html { redirect_to @entry, notice: "Entry updated successfully." }
+        format.turbo_stream {}
+      end
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

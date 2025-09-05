@@ -1,0 +1,9 @@
+<%= render_flash_messages_stream %>
+<%= turbo_stream.remove @entry %>
+<%= turbo_stream.update "main-dashboard" do %>
+  <% if current_user.entries.any? %>
+    <%= render "entries/entry_form", entry:  current_user.entries.first %>
+  <% else %>
+    <%= render "entries/entry_form", entry:  current_user.entries.build %>
+  <% end %>
+<% end %>

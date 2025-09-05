@@ -1,6 +1,6 @@
 <% if entry&.persisted? %>
   <li>
-    <a href="<%= entry_path(entry) %>" data-turbo-frame="main-dashboard" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+    <a id="<%= dom_id entry %>" href="<%= entry_path(entry) %>" data-turbo-frame="main-dashboard" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
       <%= render partial: "entries/entry_image", locals: { entry: entry } %>
       <span class="ms-3"><%= entry.name %></span>
     </a>

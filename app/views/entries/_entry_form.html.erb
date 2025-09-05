@@ -1,19 +1,39 @@
 <section aria-labelledby="entry-heading" class="w-full">
   <div class="relative mx-auto w-full max-w-xl bg-white p-6 md:p-8 rounded-2xl ring-1 ring-gray-950/5 shadow-sm">
-    <% unless entry.new_record? %>
-      <%= link_to new_entry_path,
-      class: "z-10 absolute right-6 top-6 md:right-8 md:top-8
-              inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white
-              px-3 py-2 text-sm font-medium text-gray-700 shadow-sm
-              hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2
-              focus-visible:ring-blue-600 focus-visible:ring-offset-2 transition" do %>
-        <!-- plus icon -->
-        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span>Add new entry</span>
-      <% end %>
-    <% end %>
+    <% key = entry.persisted? ? dom_id(entry) : "#{dom_id(entry)}-#{SecureRandom.hex(3)}" %>
+    <% dd_id  = "dropdownDots-#{key}" %>
+    <% btn_id = "dropdownMenuIconButton-#{key}" %>
+    <button id="<%= btn_id %>"
+        data-dropdown-toggle="<%= dd_id %>"
+        type="button"
+        class="inline-flex absolute right-6 top-6 md:right-8 md:top-8 items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+      <!-- icon -->
+      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
+        <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
+      </svg>
+    </button>
+    <div id="<%= dd_id %>"
+     class="z-50 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">
+      <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="<%= btn_id %>">
+        <% unless entry.new_record? %>
+          <li>
+            <%= link_to "Add New Entry", new_entry_path,
+              data: { turbo_frame: "main-dashboard" },
+              class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
+          </li>
+          <li>
+            <%= link_to "Delete Entry", entry_path(entry),
+              data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_frame: "main-dashboard" },
+              class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
+          </li>
+        <% end %>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a></li>
+      </ul>
+      <div class="py-2">
+        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Separated link</a>
+      </div>
+    </div>
     <% title_text = entry.new_record? ? "Create New Entry" : entry.name %>
     <header class="mb-6 md:mb-8">
       <h2 id="entry-heading" class="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900 text-center">

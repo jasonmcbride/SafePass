@@ -1,6 +1,7 @@
 class EntriesController < ApplicationController
 
   before_action :authenticate_user!
+  before_action :set_entry, only: [:show, :edit, :update, :destroy]
   before_action :set_entries, only: [:index, :new, :show, :edit, :update, :destroy]
   before_action :set_main_entry, only: [:index]
 
@@ -8,7 +9,6 @@ class EntriesController < ApplicationController
   end
 
   def show
-    @entry = current_user.entries.find(params[:id])
   end
 
   def new
@@ -20,7 +20,7 @@ class EntriesController < ApplicationController
     if @entry.save
       flash.now[:notice] = "<strong>#{@entry.name}</strong> has been saved.".html_safe
       respond_to do |format|
-        format.html { redirect_to @entry }
+        format.html { redirect_to root_path }
         format.turbo_stream {}
       end
     
@@ -30,11 +30,9 @@ class EntriesController < ApplicationController
   end
 
   def edit
-    @entry = current_user.entries.find(params[:id])
   end
 
   def update
-    @entry = current_user.entries.find(params[:id])
     if @entry.update(entry_params)
       redirect_to @entry, notice: "Entry updated successfully."
     else
@@ -43,12 +41,19 @@ class EntriesController < ApplicationController
   end
 
   def destroy
-    @entry = current_user.entries.find(params[:id])
     @entry.destroy
-    redirect_to entries_path, notice: "Entry deleted successfully."
+    flash.now[:notice] = "<strong>#{@entry.name}</strong> has been deleted.".html_safe
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.turbo_stream {}
+    end
   end
 
   private
+
+  def set_entry
+    @entry = current_user.entries.find(params[:id])
+  end
 
   def set_entries
     @entries = current_user.entries

@@ -2,7 +2,7 @@
   <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
     <%= render "shared/search" %>
     <%= turbo_frame_tag "search-results" do %>
-      <ul id="side-nav-entries" class="space-y-2 font-medium">
+      <ul id="entries-list" class="space-y-2 font-medium">
         <!-- Quick action: Create New Entry -->
         <% unless current_page?(new_entry_path) %>
           <li>
@@ -14,8 +14,8 @@
           <div class="h-px bg-gray-200 dark:bg-gray-700"></div>
         </li>
         <!-- Entries -->
-        <% if entries.any? %>
-          <%= render entries %>
+        <% if @entries.any? %>
+          <%= render @entries %>
         <% else %>
           <li class="mt-2 text-sm text-gray-500 dark:text-gray-400">
             No entries found.

@@ -5,35 +5,17 @@ class EntriesController < ApplicationController
  
 
   def index
-  @entries    = current_user.entries.search(params[:name])
-  @main_entry = @entries.first || current_user.entries.build
+    @entries = current_user.entries.search(params[:name])
+    @main_entry = @entries.first
 
-  respond_to do |format|
-    # Normal HTML/page render
-    format.html do
-      if turbo_frame_request?
-        # Frame request: return the *frame wrapper* and its contents
-        render partial: "shared/aside", locals: { entries: @entries }
-      else
-        render :index
-      end
-    end
-
-    # Optional turbo stream to patch main-dashboard when there's a single hit
-    format.turbo_stream do
-      if params[:name].present? && @entries.one?
-        render turbo_stream: turbo_stream.update(
-          "main-dashboard",
-          partial: "entries/entry_form",
-          locals: { entry: @entries.first }
-        )
-      else
-        head :ok
-      end
+    return unless params[:name].present?
+    if @entries.length == 1
+      render turbo_stream: [
+        turbo_stream.update('main-dashboard', partial: 'entries/entry_form', locals: {entry: @entries.first}),
+        turbo_stream.update('entries-list', partial: 'entries/entry', locals: {entry: @entries.first})
+      ]
     end
   end
-end
-
 
   def show
   end
